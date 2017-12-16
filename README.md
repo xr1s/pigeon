@@ -9,13 +9,13 @@ This program is a π generator using Jeremy Gibbons' Spigot Algorithm. See the J
 
 ## Demo
 
-For calculating exactly N digits after the decimal point:
+For calculating exactly 1023 digits after the decimal point:
 
 ```cpp
 #include <iostream>
 #include "pigeon.hh"
 int main() {
-  for (long pi: pigeon(1024))
+  for (long pi: pigeon(1024))  // includes leading 3
     std::cout << pi << std::flush;
 }
 ```
