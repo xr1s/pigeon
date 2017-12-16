@@ -19,7 +19,7 @@ class pigeon {
     iterator &operator++() noexcept;
     iterator operator++(int) noexcept;
    private:
-    mpz_class q, r, t, k, m, x;
+    mpz_class q, r, t, k, n, l;
     long p;
     std::size_t digits;
   };
@@ -39,7 +39,7 @@ pigeon::iterator pigeon::end() const noexcept {
 }
 
 pigeon::iterator::iterator() noexcept
-    : q{10}, r{-30}, t{3}, k{2}, m{0}, x{5}, p{3}, digits{0} {
+    : q{10}, r{-30}, t{3}, k{2}, n{0}, l{5}, p{3}, digits{0} {
 }
 
 pigeon::iterator::iterator(std::size_t digits) noexcept
@@ -56,25 +56,25 @@ bool pigeon::iterator::operator!=(const iterator &that) const noexcept {
 
 pigeon::iterator &pigeon::iterator::operator++() noexcept {
   while (true) {
-    if (this->q << 2 < this->m * this->t + this->t - this->r) {
-      this->p = m.get_si();
+    if (this->q << 2 < this->n * this->t + this->t - this->r) {
+      this->p = n.get_si();
       this->q *= 10;
-      this->r -= this->m * this->t;
+      this->r -= this->n * this->t;
       this->r *= 10;
-      this->m = (3 * this->q + this->r) / this->t;
+      this->n = (3 * this->q + this->r) / this->t;
       ++this->digits;
       break;
     } else {
-      this->t *= this->x;
+      this->t *= this->l;
       mpz_class qk = this->q * this->k;
       mpz_class q2 = 2 * this->q;
-      mpz_class rx = this->r * this->x;
-      this->m = (7 * qk + q2 + rx) / this->t;
+      mpz_class rx = this->r * this->l;
+      this->n = (7 * qk + q2 + rx) / this->t;
       this->r = std::move(rx);
-      this->r += q2 * this->x;
+      this->r += q2 * this->l;
       this->q = std::move(qk);
       ++this->k;
-      this->x += 2;
+      this->l += 2;
     }
   }
   return *this;
